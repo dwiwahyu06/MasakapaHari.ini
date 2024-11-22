@@ -16,7 +16,6 @@ export default function Resep() {
     <div className="Container">
       {resep.map((item, index) => (
         <div className="Box" key={index}>
-          {/* Tambahkan elemen gambar */}
           <img src={item.image} alt={item.nama} className="RecipeImage" />
           
           <h2>{item.nama}</h2>
