@@ -1,5 +1,5 @@
 import Header from "./Component/Header";
-import Resep from "./Page/Resep"; // Pastikan path benar ke Resep.jsx
+import Resep from "./Page/Resep"; 
 
 export default function App() {
   return (
