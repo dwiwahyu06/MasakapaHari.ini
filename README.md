@@ -12,3 +12,4 @@ MasakapaHari.ini adalah platform yang menghadirkan beragam resep masakan dengan 
 6.Ubah informasi resep yang sudah ada untuk memperbarui detail, mengoreksi kesalahan, atau menambahkan informasi baru.
 7.Hapus resep yang tidak lagi relevan.
 8.Tinjau dan cek seluruh resep yang telah ada .
+9.Resep Populer yang dapar menambah data dan menghapus atau menganti data
