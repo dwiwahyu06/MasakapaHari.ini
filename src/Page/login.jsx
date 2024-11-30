@@ -12,14 +12,13 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [showPassword, setShowPassword] = useState(false); // Untuk toggle password visibility
+  const [showPassword, setShowPassword] = useState(false); 
 
   const navigate = useNavigate();
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Validasi Username
     const isFirstLetterUppercase =
       username.charAt(0) === username.charAt(0).toUpperCase();
     const hasNoSpaces = !/\s/.test(username);
@@ -34,7 +33,7 @@ const Login = () => {
       return;
     }
 
-    // Validasi Password
+ 
     const hasNoSpacesInPassword = !/\s/.test(password);
     const isPasswordLengthValid = password.length <= 10;
     const isValidPasswordPattern = /^[a-z]{3}[0-9]*$/.test(password);
@@ -54,11 +53,10 @@ const Login = () => {
       return;
     }
 
-    // Mengecek apakah username dan password sesuai dengan admin
     if (username === adminUsername && password === adminPassword) {
       alert("Login Berhasil! Selamat datang, Admin.");
       setIsLoggedIn(true);
-      navigate("/Resep");  // Arahkan ke halaman resep jika login berhasil
+      navigate("/Resep");  
     } else {
       setError("Username atau password salah");
     }

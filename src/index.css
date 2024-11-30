@@ -63,37 +63,6 @@
   cursor: pointer;
   padding: 0.5rem;
 }
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  .Navbar {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: #FFD6A5;
-    padding: 1rem;
-    display: none;
-  }
-
-  .Navbar.open {
-    display: block;
-  }
-
-  .NavLinks {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .NavLinks a {
-    display: block;
-    padding: 0.8rem 1rem;
-  }
-}
-
 .Container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -306,24 +275,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-@media (max-width: 600px) {
-  .Container {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
 
-  .Box h2 {
-    font-size: 1.3rem;
-  }
-
-  .Box h3 {
-    font-size: 1.1rem;
-  }
-
-  .Box li {
-    font-size: 0.9rem;
-  }
-}
 
 .username {
   color: #333;
@@ -661,12 +613,12 @@ button:hover {
   color: white; 
 
   width: 100%;
-  height: 86vh; /* Sesuaikan tinggi */
+  height: 86vh; 
   background-image: url('https://i.pinimg.com/originals/83/7b/19/837b19c53e83b915e8351922c734bc96.gif');
-  background-size: cover; /* Agar gambar menutupi seluruh elemen */
-  background-position: center; /* Pusatkan gambar */
-  background-repeat: no-repeat; /* Jangan ulang gambar */
-  position: relative; /* Supaya bisa menampung konten */
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  position: relative;
 
 }
 
@@ -964,7 +916,6 @@ li {
 
 
 
-/* Responsif untuk perangkat dengan ukuran 360px - 800px */
 @media (max-width: 360px) {
   .Header {
     flex-direction: column;
@@ -1032,7 +983,51 @@ li {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
+  .Container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
 
+  .Box h2 {
+    font-size: 1.3rem;
+  }
+
+  .Box h3 {
+    font-size: 1.1rem;
+  }
+
+  .Box li {
+    font-size: 0.9rem;
+  }
 }
 
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .Navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #FFD6A5;
+    padding: 1rem;
+    display: none;
+  }
+
+  .Navbar.open {
+    display: block;
+  }
+
+  .NavLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .NavLinks a {
+    display: block;
+    padding: 0.8rem 1rem;
+  }
+}

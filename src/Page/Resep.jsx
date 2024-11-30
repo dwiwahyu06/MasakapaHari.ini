@@ -20,7 +20,7 @@ export default function Resep() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [newRecipe, setNewRecipe] = useState({ nama: '', Asal: '', bahan: [], langkah: [], image: '' });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [sortOption, setSortOption] = useState(''); // Tambahan untuk sorting
+  const [sortOption, setSortOption] = useState(''); 
   const itemsPerPage = 8;
   const navigate = useNavigate();
 
@@ -94,36 +94,31 @@ export default function Resep() {
     setIsEditModalOpen(true);
   };
   const handleSaveEdit = () => {
-    // Cari indeks berdasarkan ID atau properti unik
+
     const recipeIndex = resep.findIndex(item => item.id === selectedRecipe.id);
   
     if (recipeIndex !== -1) {
-      // Salin array resep
       const updatedResep = [...resep];
       
-      // Update resep pada indeks yang ditemukan
       updatedResep[recipeIndex] = {
-        ...updatedResep[recipeIndex], // Gunakan data lama
-        ...selectedRecipe, // Gabungkan dengan data baru
+        ...updatedResep[recipeIndex], 
+        ...selectedRecipe,
         bahan: selectedRecipe.bahan
           ? selectedRecipe.bahan.split(',').map(item => item.trim())
-          : updatedResep[recipeIndex].bahan, // Hanya update jika ada perubahan
+          : updatedResep[recipeIndex].bahan,
         langkah: selectedRecipe.langkah
           ? selectedRecipe.langkah.split(',').map(item => item.trim())
-          : updatedResep[recipeIndex].langkah // Hanya update jika ada perubahan
+          : updatedResep[recipeIndex].langkah 
       };
   
-      // Perbarui state resep dan filteredResep
       setResep(updatedResep);
       setFilteredResep(updatedResep);
   
-      // Opsional: Berikan pesan berhasil
       alert('Resep berhasil disimpan!');
     } else {
       alert('Resep tidak ditemukan.');
     }
   
-    // Tutup modal dan reset selectedRecipe
     setIsEditModalOpen(false);
     setSelectedRecipe(null);
   };
