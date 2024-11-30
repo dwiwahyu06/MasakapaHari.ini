@@ -943,6 +943,7 @@ li {
     gap: 10px;
   }
   .Box {
+    margin-left: -15px;
     width: 40vh;
     height: 10vh;
   }
@@ -975,11 +976,48 @@ li {
   button {
     margin-right: 180px;
     height: 35px;
-    width: 85px;
+    width: 50px;
   }
   .SearchContainer  input {
-    margin-left: 142px;
+    margin-left: 170px;
     width: 60px;
+  }
+  .login-container {
+    height: 100vh; 
+    background-size: cover;
+    background-position: center center; 
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    color: white; 
+  
+    width: 100%;
+    height: 86vh; 
+    background-image: url('https://i.pinimg.com/originals/83/7b/19/837b19c53e83b915e8351922c734bc96.gif');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    position: relative;
+  
+  }
+  .login-form {
+    background: rgba(0, 0, 0, 0.5); 
+    padding: 30px;
+    border-radius: 8px;
+    width: 50%;
+    margin-right: 250px;
+    max-width: 400px; 
+    text-align: center;
+  }
+  .login-form button {
+    width: 190px;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    cursor: pointer;
   }
 }
 
