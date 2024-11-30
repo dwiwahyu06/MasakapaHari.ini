@@ -1,68 +1,284 @@
 :root {
-  background-color: #FFF3C7;
+  background-color:#DEAA79 ;
 }
 
 .Header {
-  height: 200px;
-  width: 200vb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
   background-color: #FFD6A5;
+  position: sticky;
+  top: 0;
+  width: auto;
+  z-index: 1000;
+}
+
+.logo {
+  text-decoration: none;
+  color: inherit;
 }
 
 .Textheader {
-  text-align: center;
-  font-size: 90px;
-  margin: 0px;
+  font-size: 2rem;
+  margin: 0;
+  color: #333;
 }
 
-/* .Header_Login {
-  height: 200px;
-  background-color: #FFD6A5;
+.Navbar {
+  display: flex;
+  align-items: center;
 }
 
-.Textheader_Login {
-  text-align: center;
-  font-size: 90px;
-  margin: 0px;
-} */
+.NavLinks {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.NavLinks a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.NavLinks a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.NavLinks a.active {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .Navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #FFD6A5;
+    padding: 1rem;
+    display: none;
+  }
+
+  .Navbar.open {
+    display: block;
+  }
+
+  .NavLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .NavLinks a {
+    display: block;
+    padding: 0.8rem 1rem;
+  }
+}
 
 .Container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding: 20px;
-  max-width: 3000px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: none;
+  margin: 0;
 }
 
 .Box {
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 90%;
+  height: 100%;
+  min-height: 350px;
+  margin: 0;
   display: flex;
   flex-direction: column;
 }
 
+.SearchContainer {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #FFF3C7;
+  padding: 20px;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.SearchContainer  input{
+  width: 300px;
+  padding: 12px 16px;
+  border: 2px solid #FFD6A5;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+}
+
+.SearchContainer select {
+  padding: 12px 16px;
+  border: 2px solid #FFD6A5;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: white;
+  min-width: 150px;
+}
+
+.SearchContainer button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.SearchContainer button:hover {
+  background-color: #ff5252;
+  transform: translateY(-2px);
+}
+
+.Box {
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 450px;
+}
+
 .Box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.Box input[type="checkbox"] {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #ff6b6b;
 }
 
 .RecipeImage {
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.Box:hover .RecipeImage {
+  transform: scale(1.05);
+}
+
+.RecipeContent {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .Box h2 {
   font-size: 1.5rem;
-  color: #333;
-  padding: 15px 20px 10px 20px;
-  background-color: #ff6b6b;
-  color: #fff;
   margin: 0;
-  border-bottom: 3px solid #f55;
+  color: #2d3436;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.Box p {
+  margin: 0;
+  color: #636e72;
+  font-size: 0.95rem;
+}
+
+.IconContainer {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+  gap: 12px;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+}
+
+.Icon {
+  color: #ff6b6b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 6px;
+}
+
+.Icon:hover {
+  transform: scale(1.15);
+  color: #ff5252;
+}
+
+.AddNew {
+  border: 3px dashed #FFD6A5;
+  background-color: rgba(255, 243, 199, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.AddNew:hover {
+  background-color: rgba(255, 243, 199, 0.5);
+  border-color: #ff6b6b;
+}
+
+.PlusIcon {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.AddNew p {
+  font-size: 1.2rem;
+  color: #ff6b6b;
+  font-weight: 500;
 }
 
 .Box h3 {
@@ -145,10 +361,8 @@ input[type='text'] {
   background-color: #333;
   color: #fff;
   text-align: center;
-  /* position: relative; */
   width: 100%;
   height: 7vh;
-  /* margin: ; */
 }
 
 
@@ -158,7 +372,6 @@ input[type='text'] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* flex-wrap: wrap; */
 }
 
 .footer p {
@@ -258,114 +471,6 @@ input[type='text'] {
   color: wheat;
 }
 
-/* .Pagination {
-  height: 70px;
-}
-
-.Pagination button {
-  margin: 0 5px;
-  padding: 8px 12px;
-  border: none;
-  background-color: #ddd;
-  cursor: pointer;
-}
-
-.Pagination button.active {
-  background-color: #007bff;
-  color: white;
-} */
-
-
-/* .IconContainer {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 20px; 
-}
-
-.Icon {
-  color: #ff6b6b; 
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.Icon:hover {
-  transform: scale(1.1);
-} */
-
-
-
-
-
-/* .BookHeartContainer {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  margin-bottom: 20px;
-}
-
-.FavoriteCount {
-  font-weight: bold;
-  color: #ff6347;
-} */
- */
-
-
-
-
-
-/* Header Style */
-/* .Header {
-  background-color: #ff6f61;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-} */
-
-/* .Textheader {
-  font-size: 90x;
-  font-weight: bold;
-} */
-
-/* Navbar Style */
-/* .Navbar {
-  display: flex;
-  align-items: center;
-} */
-
-/* .NavLinks {
-  display: flex;
-  list-style: none;
-  gap: 15px;
-} */
-/* 
-.NavLinks li a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-} */
-
-/* .NavLinks li a:hover {
-  color: #f4f4f4;
-} */
-
-/* BookHeart Style */
-/* .BookHeart {
-  display: flex;
-  align-items: center;
-  color: white;
-  cursor: pointer;
-} */
-
-/* .BookHeart:hover {
-  color: #f4f4f4;
-} */
-
-
 
 
 .Box {
@@ -389,7 +494,7 @@ form input {
 
 button {
   padding: 8px 12px;
-  margin-right: 10px;
+  margin-right: 20px;
   background-color: #007bff;
   color: white;
   border: none;
@@ -409,31 +514,137 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+  padding: 20px;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .ModalContent {
   background: white;
-  padding: 20px;
-  border-radius: 8px;
+  padding: 40px;
+  border-radius: 20px;
   max-width: 600px;
   width: 100%;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
-button {
-  background: #007bff;
+.ModalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.ModalHeader h2 {
+  margin: 0;
+  color: #2d3436;
+  font-size: 1.8rem;
+}
+
+.CloseButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.CloseButton:hover {
+  background-color: #fff3f3;
+}
+
+.FormGroup {
+  margin-bottom: 20px;
+}
+
+.FormGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2d3436;
+}
+
+.ModalContent input {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 15px;
+  border: 2px solid #eee;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background-color: #f8f9fa;
+}
+
+.ModalContent input:focus {
+  outline: none;
+  border-color: #ff6b6b;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.1);
+}
+
+.ModalButtons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.SaveButton {
+  flex: 1;
+  padding: 12px 24px;
+  background-color: #ff6b6b;
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-button:hover {
-  background: #0056b3;
+.SaveButton:hover {
+  background-color: #ff5252;
+  transform: translateY(-2px);
+}
+
+.CancelButton {
+  flex: 1;
+  padding: 12px 24px;
+  background-color: #e9ecef;
+  color: #495057;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.CancelButton:hover {
+  background-color: #dee2e6;
+  transform: translateY(-2px);
 }
 
 
@@ -442,14 +653,21 @@ button:hover {
 
 .login-container {
   height: 100vh; 
-  background-image: url('https://i.pinimg.com/736x/fe/1d/25/fe1d2582f62a12ac9af698248829be63.jpg');
   background-size: cover;
   background-position: center center; 
   display: flex;
   justify-content: center; 
   align-items: center; 
-  padding: 0 20px;
   color: white; 
+
+  width: 100%;
+  height: 86vh; /* Sesuaikan tinggi */
+  background-image: url('https://i.pinimg.com/originals/83/7b/19/837b19c53e83b915e8351922c734bc96.gif');
+  background-size: cover; /* Agar gambar menutupi seluruh elemen */
+  background-position: center; /* Pusatkan gambar */
+  background-repeat: no-repeat; /* Jangan ulang gambar */
+  position: relative; /* Supaya bisa menampung konten */
+
 }
 
 .login-form {
@@ -475,7 +693,7 @@ button:hover {
 }
 
 .login-form button {
-  width: 100%;
+  width: 420px;
   padding: 10px;
   background-color: #007bff;
   border: none;
@@ -554,5 +772,267 @@ li {
 .popup-content img {
   max-width: 100%;
   margin-bottom: 10px;
+}
+
+.title {
+  text-align: center;
+  font-size: 3rem;
+  padding: 20px;
+  background-color: #FFE4C4;
+  margin: 0;
+  width: auto;
+  font-weight: bold;
+}
+
+.detail-container {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.back-button:hover {
+  background-color: #ff5252;
+  transform: translateY(-2px);
+}
+
+.detail-content {
+  background-color: white;
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.detail-image {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.recipe-section {
+  margin: 30px 0;
+}
+
+.recipe-section h2 {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+}
+
+.recipe-section ul,
+.recipe-section ol {
+  padding-left: 20px;
+}
+
+.recipe-section li {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.popular-container {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.popular-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.popular-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.popular-content {
+  padding: 20px;
+}
+
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.add-popular {
+  border: 3px dashed #FFD6A5;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.recipe-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  max-height: 60vh;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.recipe-option {
+  cursor: pointer;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.recipe-option:hover {
+  transform: translateY(-5px);
+}
+
+.recipe-option img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.recipe-option h4 {
+  padding: 8px;
+  margin: 0;
+  text-align: center;
+  background: white;
+  font-size: 14px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0;
+  padding: 20px;
+}
+
+.pagination-button {
+  padding: 8px 16px;
+  border: 2px solid #FFD6A5;
+  background-color: white;
+  color: #333;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pagination-button:hover {
+  background-color: #FFD6A5;
+  color: #333;
+}
+
+.pagination-button.active {
+  background-color: #ff6b6b;
+  border-color: #ff6b6b;
+  color: white;
+}
+
+
+
+/* Responsif untuk perangkat dengan ukuran 360px - 800px */
+@media (max-width: 360px) {
+  .Header {
+    flex-direction: column;
+    padding: 1rem;
+    width: 90%;
+  }
+  .Textheader {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .NavLinks {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .title {
+    font-size: 20px;
+  }
+  .NavLinks a {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+  .Container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .Box {
+    width: 40vh;
+    height: 10vh;
+  }
+  .Box h2 {
+    font-size: 1.2rem;
+  }
+  .RecipeImage {
+    height: 180px;
+  }
+  .IconContainer {
+    top: 10px;
+    right: 10px;
+    gap: 8px;
+    padding: 6px;
+  }
+  .Icon {
+    padding: 4px;
+    font-size: 18px;
+  }
+  .footer p {
+    font-size: 14px;
+    margin: 10px;
+  }
+  .footer {
+    width: 99%;
+  }
+  .footer-links a {
+    font-size: 12px;
+  }
+  button {
+    margin-right: 180px;
+    height: 35px;
+    width: 85px;
+  }
+  .SearchContainer  input {
+    margin-left: 142px;
+    width: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+
 }
 

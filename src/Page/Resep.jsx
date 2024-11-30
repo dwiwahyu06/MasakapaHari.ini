@@ -1,11 +1,18 @@
- 
-/* eslint-disable no-unused-vars */
-import { Info, Edit, Plus, Heart, Trash2 } from 'lucide-react';
+
+import { Info, Edit, Plus, Trash2, X } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import { useAppContext } from '../context/AppContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Resep() {
-  const [resep, setResep] = useState([]);
-  const [filteredResep, setFilteredResep] = useState([]);
+  const { 
+    resep, 
+    setResep, 
+    filteredResep, 
+    setFilteredResep,
+    isLoggedIn 
+  } = useAppContext();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [checkedItems, setCheckedItems] = useState(new Set());
@@ -14,9 +21,15 @@ export default function Resep() {
   const [newRecipe, setNewRecipe] = useState({ nama: '', Asal: '', bahan: [], langkah: [], image: '' });
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState(''); // Tambahan untuk sorting
-  const itemsPerPage = 12;
+  const itemsPerPage = 8;
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/');
+      return;
+    }
+    
     fetch('resep.json')
       .then((response) => response.json())
       .then((data) => {
@@ -26,7 +39,7 @@ export default function Resep() {
       .catch((error) => {
         console.error('Gagal mengambil data:', error);
       });
-  }, []);
+  }, [isLoggedIn]);
 
   const handleSearch = (event) => {
     const term = event.target.value.toLowerCase();
@@ -80,16 +93,41 @@ export default function Resep() {
     setSelectedRecipe(item);
     setIsEditModalOpen(true);
   };
-
   const handleSaveEdit = () => {
-    const updatedResep = resep.map((item) =>
-      item === selectedRecipe ? selectedRecipe : item
-    );
-    setResep(updatedResep);
-    setFilteredResep(updatedResep);
+    // Cari indeks berdasarkan ID atau properti unik
+    const recipeIndex = resep.findIndex(item => item.id === selectedRecipe.id);
+  
+    if (recipeIndex !== -1) {
+      // Salin array resep
+      const updatedResep = [...resep];
+      
+      // Update resep pada indeks yang ditemukan
+      updatedResep[recipeIndex] = {
+        ...updatedResep[recipeIndex], // Gunakan data lama
+        ...selectedRecipe, // Gabungkan dengan data baru
+        bahan: selectedRecipe.bahan
+          ? selectedRecipe.bahan.split(',').map(item => item.trim())
+          : updatedResep[recipeIndex].bahan, // Hanya update jika ada perubahan
+        langkah: selectedRecipe.langkah
+          ? selectedRecipe.langkah.split(',').map(item => item.trim())
+          : updatedResep[recipeIndex].langkah // Hanya update jika ada perubahan
+      };
+  
+      // Perbarui state resep dan filteredResep
+      setResep(updatedResep);
+      setFilteredResep(updatedResep);
+  
+      // Opsional: Berikan pesan berhasil
+      alert('Resep berhasil disimpan!');
+    } else {
+      alert('Resep tidak ditemukan.');
+    }
+  
+    // Tutup modal dan reset selectedRecipe
     setIsEditModalOpen(false);
     setSelectedRecipe(null);
   };
+  
 
   const handleAddRecipe = () => {
     setResep([newRecipe, ...resep]);
@@ -112,14 +150,19 @@ export default function Resep() {
 
   const currentItems = filteredResep.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+  const totalPages = Math.ceil(filteredResep.length / itemsPerPage);
+
   return (
-
-
-    <div className="Container">
-      {/* <Header /> */}
+    <>
+      <h1 className="title">MasakApaHari.ini</h1>
       <div className="SearchContainer">
-        <input type="text" placeholder="Cari resep..." value={searchTerm} onChange={handleSearch} />
-        <select value={sortOption} onChange={handleSortChange}>
+        <input 
+          type="text" 
+          placeholder="Cari resep..." 
+          value={searchTerm} 
+          onChange={handleSearch} 
+        />
+        <select value={sortOption} onChange={handleSortChange} className='sorting'>
           <option value="">Pilih Sorting</option>
           <option value="A-Z">A-Z</option>
           <option value="Z-A">Z-A</option>
@@ -129,68 +172,119 @@ export default function Resep() {
           <Trash2 /> Hapus yang Dipilih
         </button>
       </div>
-
-      {currentItems.map((item, index) => (
-        <div className="Box" key={index}>
-          <input
-            type="checkbox"
-            checked={checkedItems.has(item)}
-            onChange={() => handleCheckboxToggle(item)}
-          />
-          <img src={item.image} alt={item.nama} className="RecipeImage" />
-          <h2>{item.nama}</h2>
-          <p>Asal: {item.Asal}</p>
-          <div className="IconContainer">
-            <Info className="Icon" />
-            <Edit className="Icon" onClick={() => handleEdit(item)} />
-          </div>
-        </div>
-      ))}
-
-      <div className="Box AddNew" onClick={() => setIsAddModalOpen(true)}>
-        <Plus className="Icon PlusIcon" />
-        <p>Tambah Resep Baru</p>
-      </div>
-
-      {isEditModalOpen && (
-        <div className="Modal">
-          <div className="ModalContent">
-            <h2>Edit Resep</h2>
+      <div className="Container">
+        {currentItems.map((item, index) => (
+          <div className="Box" key={index}>
             <input
-              type="text"
-              value={selectedRecipe.nama}
-              onChange={(e) => setSelectedRecipe({ ...selectedRecipe, nama: e.target.value })}
-              placeholder="Nama Makanan"
+              type="checkbox"
+              checked={checkedItems.has(item)}
+              onChange={() => handleCheckboxToggle(item)}
             />
-            <input
-              type="text"
-              value={selectedRecipe.Asal}
-              onChange={(e) => setSelectedRecipe({ ...selectedRecipe, Asal: e.target.value })}
-              placeholder="Asal"
-            />
-            <button onClick={handleSaveEdit}>Simpan</button>
+            <img src={item.image} alt={item.nama} className="RecipeImage" />
+            <div className="RecipeContent">
+              <h2>{item.nama}</h2>
+              <p>Asal: {item.Asal}</p>
+            </div>
+            <div className="IconContainer">
+              <Info 
+                className="Icon" 
+                onClick={() => navigate(`/recipe/${index}`)} 
+              />
+              <Edit className="Icon" onClick={() => handleEdit(item)} />
+            </div>
           </div>
-        </div>
-      )}
+        ))}
 
-      {isAddModalOpen && (
+        <div className="Box AddNew" onClick={() => setIsAddModalOpen(true)}>
+          <Plus className="Icon PlusIcon" />
+          <p>Tambah Resep Baru</p>
+        </div>
+
+        {isEditModalOpen && (
+          <div className="Modal">
+            <div className="ModalContent">
+              <button 
+                className="CloseButton" 
+                onClick={() => setIsEditModalOpen(false)}
+              >
+                <X size={24} color="#666" />
+              </button>
+              
+              <div className="ModalHeader">
+                <h2>Edit Resep</h2>
+              </div>
+
+              <div className="FormGroup">
+                <label>Nama Makanan</label>
+                <input
+                  type="text"
+                  value={selectedRecipe.nama}
+                  onChange={(e) => setSelectedRecipe({ ...selectedRecipe, nama: e.target.value })}
+                  placeholder="Masukkan nama makanan"
+                />
+              </div>
+
+              <div className="FormGroup">
+                <label>Asal</label>
+                <input
+                  type="text"
+                  value={selectedRecipe.Asal}
+                  onChange={(e) => setSelectedRecipe({ ...selectedRecipe, Asal: e.target.value })}
+                  placeholder="Masukkan asal makanan"
+                />
+              </div>
+
+              <div className="FormGroup">
+                <label>Bahan-bahan</label>
+                <input
+                  type="text"
+                  value={Array.isArray(selectedRecipe.bahan) ? selectedRecipe.bahan.join(', ') : selectedRecipe.bahan}
+                  onChange={(e) => setSelectedRecipe({ ...selectedRecipe, bahan: e.target.value })}
+                  placeholder="Masukkan bahan-bahan (pisahkan dengan koma)"
+                />
+              </div>
+
+              <div className="FormGroup">
+                <label>Langkah-langkah</label>
+                <input
+                  type="text"
+                  value={Array.isArray(selectedRecipe.langkah) ? selectedRecipe.langkah.join(', ') : selectedRecipe.langkah}
+                  onChange={(e) => setSelectedRecipe({ ...selectedRecipe, langkah: e.target.value })}
+                  placeholder="Masukkan langkah-langkah (pisahkan dengan koma)"
+                />
+              </div>
+
+              <div className="ModalButtons">
+                <button className="CancelButton" onClick={() => setIsEditModalOpen(false)}>
+                  Batal
+                </button>
+                <button className="SaveButton" onClick={handleSaveEdit}>
+                  Simpan
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {isAddModalOpen && (
         <div className="Modal">
           <div className="ModalContent">
             <h2>Tambah Resep Baru</h2>
-            <input
+
+             <input
               type="text"
               value={newRecipe.nama}
               onChange={(e) => setNewRecipe({ ...newRecipe, nama: e.target.value })}
               placeholder="Nama Makanan"
             />
-            <input
+               <input
               type="text"
               value={newRecipe.Asal}
               onChange={(e) => setNewRecipe({ ...newRecipe, Asal: e.target.value })}
               placeholder="Asal"
             />
             <input
-              type="file"
+               type="file"
               onChange={(e) => handleImageUpload(e, newRecipe)}
             />
              <input
@@ -199,16 +293,32 @@ export default function Resep() {
               onChange={(e) => setNewRecipe({ ...newRecipe, bahan: e.target.value })}
               placeholder="Bahan"
             />
-             <input
+               <input
               type="text"
               value={newRecipe.langkah}
               onChange={(e) => setNewRecipe({ ...newRecipe, langkah: e.target.value })}
               placeholder="Langkah-Langkah"
             />
-            <button onClick={handleAddRecipe}>Tambah</button>
+              <button onClick={handleAddRecipe}>Tambah</button>    
+
+               <button onClick={() => setIsAddModalOpen(false)}>Back</button>   
+              </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => handlePageChange(pageNum)}
+            className={`pagination-button ${currentPage === pageNum ? 'active' : ''}`}
+          >
+            {pageNum}
+          </button>
+        ))}
+     
+      </div>
+    </>
   );
 }
